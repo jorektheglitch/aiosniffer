@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 import asyncio
-
 from socket import socket, AF_PACKET, SOCK_DGRAM
-from socket import htons
 
 import argparse
-from sys import argv
 
 ETH_P_ALL = 0x0003
 
@@ -53,7 +50,7 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Simple asyncio sniffer', add_help=True)
     parser.add_argument('-i', '--ifname', default=None, help='Name of interface which sniffer will run on')
-    namespace = parser.parse_args(argv[1:])
+    namespace = parser.parse_args()
     ifname = namespace.ifname
 
     if not ifname:
