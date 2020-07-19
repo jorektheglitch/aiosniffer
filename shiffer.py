@@ -11,10 +11,10 @@ ETH_P_ALL = 0x0003
 
 
 def stop():
-    print('\nstoping sniffer...')
+    print('\nstopping sniffer...')
     loop = asyncio.get_event_loop()
     loop.stop()
-    print('sniifer stopped')
+    print('sniffer stopped')
     exit()
 
 
@@ -26,7 +26,7 @@ class RawProtocol:
     def datagram_received(self, data, source):
         #ifacename, protocol_type, in or out, packet_type ETHERNET, hwaddr
         if_name, proto, direction, pk_type, src_mac = source
-        message = data.decode()
+        message = data.hex()
         mac_str = ':'.join(hex(i)[2:].upper() for i in src_mac)
         print('{}:\n{}\n\n'.format(mac_str, message))
 
@@ -59,10 +59,10 @@ if __name__ == "__main__":
     if not ifname:
         print("Interface name don't specified")
         exit()
+
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(start_sniff(ifname))
-    
     try:
+        loop.run_until_complete(start_sniff(ifname))
         loop.run_forever()
     except KeyboardInterrupt:
         stop()
